@@ -9,3 +9,31 @@
 
 簡単に組み込めることを前提に作ったので,基本的にプロパティのBOOLでほとんど管理できます。
 ルーペを表示している間の処理をしっかり書けば、スクロールやテーブルの上でも使用可能です。 
+
+
+# 実装例
+```
+LoupeObject* loupeObj = [[ LoupeObject alloc ] init] ;
+
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{ 
+	if (!loupeObj.isLoupeMode)
+	{
+		loupeObj.isLoupeMode = YES ;
+		[ loupeObj makeLoupeImageFromView:self withTouchPoint:[touch locationInView:self]] ;
+	}
+}
+
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	if (loupeObj.isLoupeMode)
+	{
+		[ loupeObj makeLoupeImageFromView:self withTouchPoint:[touch locationInView:self]] ;
+	}
+}
+
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	loupeObj.isLoupeMode = NO ;
+}
+```
